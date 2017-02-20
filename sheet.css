@@ -1,0 +1,33 @@
+html, body{
+	margin: 0px;
+	padding: 0px;
+}
+
+#target{
+	position: relative;
+	margin: 10%;
+	width: 80%;
+	height: 200px;
+	background-color: #444;
+}
+
+
+.consoleWindow{
+	display: block;
+	position: absolute;
+	background-color: rgba(0,0,0,0.5);
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	color: #fff;
+	font-size: 24px;
+}
+.consoleHide{
+	display: none;
+}
+.consoleBox{
+	width: 20px;
+	height: 20px;
+	background-color: #000;
+}
