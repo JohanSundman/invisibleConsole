@@ -1,17 +1,13 @@
 
 // A test console
 function testConsole(str){
-	console.log(str);
+	console.log("text received: " + str);
 	
+	// Color example
 	for(var i = 0; i < colors.length; i++){
 		if(colors[i] == str){
-			//target.style.backgroundColor = colors[i];
-			console.log("match with " + str);
+			target.style.backgroundColor = colors[i];
 		}
-	}
-
-	if(str == "test"){
-		console.log("RECIEVED TEST");
 	}
 }
 

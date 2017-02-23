@@ -74,7 +74,6 @@ function Console(callback, targets = [document], visible = false, duration = 150
 
 	// Update it to the callback
 	this.update = function(){
-		console.log(this.input);
 		if(this.visible){
 			this.window.hide(false); // Show it in case it's hidden
 			this.window.update(this.input); // Update the console window
