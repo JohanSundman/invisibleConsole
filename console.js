@@ -27,19 +27,24 @@ function Console(callback, targets = [document], visible = false, duration = 150
 		// Set the typing event
 		targets[i].addEventListener("keypress", function(e){
 			key = e.which || e.keyCode || e.charCode;
-			self.write(String.fromCharCode(key));
-		});
-
-		// Set the erase/enter event
-		targets[i].addEventListener("keydown", function(e){
-			key = e.which || e.keyCode;
+			
+			// Check for special keys
 			if(key == self.ENTER){
 				self.submit();
 			}
-			else if(key == self.BACK){
+			else{ // It's a normal key(probably)
+				self.write(String.fromCharCode(key));
+			}
+		});
+		
+		// Set the erase event
+		targets[i].addEventListener("keydown", function(e){
+			key = e.which || e.keyCode;
+			if(key == self.BACK){
 				self.erase();
 			}
 		});
+	
 	}
 
 	// Set a new timeout
@@ -69,6 +74,7 @@ function Console(callback, targets = [document], visible = false, duration = 150
 
 	// Update it to the callback
 	this.update = function(){
+		console.log(this.input);
 		if(this.visible){
 			this.window.hide(false); // Show it in case it's hidden
 			this.window.update(this.input); // Update the console window
@@ -79,8 +85,8 @@ function Console(callback, targets = [document], visible = false, duration = 150
 
 	// Update it to the callback
 	this.submit = function(){
-		this.reset(); // Reset the console
 		this.callback(this.input); // Will send the input and the reset reference
+		this.reset(); // Reset the console
 	}
 }
 
@@ -107,12 +113,12 @@ function ConsoleWindow(parent = document.body){
 
 	// Basic functionality
 	this.update = function(txt){
-		console.log(txt.length);
 		if(txt.length === 0){
 			this.hide(true);
 			return;
 		}
-
+		
+		// Update the text and box position
 		this.el.innerHTML = txt;
 		var w = this.el.offsetWidth;
 		var h = this.el.offsetHeight;
@@ -121,13 +127,12 @@ function ConsoleWindow(parent = document.body){
 		this.el.style.left = this.parent.offsetWidth / 2 - w / 2 + "px";
 		this.el.style.top = this.parent.offsetHeight / 2 - h / 2 + "px";
 	}
-	this.hide = function(hide){
-		if(hide){
+	// Hide/show the box
+	this.hide = function(hide = true){
+		if(hide){ // Hide
 			this.el.classList.add("consoleHide");
-			console.log("REMOVED");
-			console.log(this.el);
 		}
-		else{
+		else{ // Show
 			this.el.classList.remove("consoleHide");
 		}
 	}
