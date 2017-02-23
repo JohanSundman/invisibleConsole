@@ -2,50 +2,47 @@
 	Console class
 */
 
-function Console(callback, targets = [document], visible = false, duration = 1500){
+function Console(callback, duration = 2500, visible = true, target = document, outline = false){
 	this.callback = callback;
-	this.targets = targets;
+	this.target = target;
 	this.visible = visible;
 	this.duration = duration;
 	
 	// Set the console window
-	this.window = new ConsoleWindow(this.targets[0]);
+	this.window = new ConsoleWindow(this.target, outline);
 
 	this.input = "";
 	this.ENTER = 13;
 	this.BACK = 8;
 
-	// Create the events
-	var self = this;
-	var key, i;
-	for(i = 0; i < targets.length; i++){
-		// Set a tab index if there is none
-		if(targets[i].tabIndex == -1){
-			targets[i].tabIndex = 1;
-		}
-		
-		// Set the typing event
-		targets[i].addEventListener("keypress", function(e){
-			key = e.which || e.keyCode || e.charCode;
-			
-			// Check for special keys
-			if(key == self.ENTER){
-				self.submit();
-			}
-			else{ // It's a normal key(probably)
-				self.write(String.fromCharCode(key));
-			}
-		});
-		
-		// Set the erase event
-		targets[i].addEventListener("keydown", function(e){
-			key = e.which || e.keyCode;
-			if(key == self.BACK){
-				self.erase();
-			}
-		});
-	
+	// Set a tab index if there is none
+	if(target.tabIndex == -1){
+		target.tabIndex = 1;
 	}
+		
+	// Set the typing event
+	var self = this;
+	target.addEventListener("keypress", function(e){
+		var key = e.which || e.keyCode || e.charCode;
+			
+		// Check for special keys
+		if(key == self.ENTER){
+			self.submit();
+		}
+		else{ // It's a normal key(probably)
+			self.write(String.fromCharCode(key));
+		}
+	});
+		
+	// Set the erase event
+	target.addEventListener("keydown", function(e){
+		var key = e.which || e.keyCode;
+		if(key == self.BACK){
+			self.erase();
+		}
+	});
+	
+	
 
 	// Set a new timeout
 	this.setTimeout = function(){
@@ -95,8 +92,11 @@ function Console(callback, targets = [document], visible = false, duration = 150
 
 
 
-function ConsoleWindow(parent = document.body){
+function ConsoleWindow(parent = document.body, outline = false){
 	this.parent = parent;
+	if(!outline){
+		this.parent.classList.add("consoleTarget");
+	}
 	this.el = document.createElement("div");
 	this.el.classList.add("consoleWindow");
 	this.el.classList.add("consoleHide");
