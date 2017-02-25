@@ -2,18 +2,18 @@
 	Console class
 */
 
-function Console(callback, duration = 2500, visible = true, target = document, outline = false){
+function Console(callback, duration = 2500, visible = true, target = document, topPercent = 30, outline = false){
 	this.callback = callback;
 	this.target = target;
 	this.visible = visible;
 	this.duration = duration;
 	
 	// Set the console window
-	this.window = new ConsoleWindow(this.target, outline);
+	this.window = new ConsoleWindow(this.target, topPercent, outline);
 
 	this.input = "";
-	this.ENTER = 13;
-	this.BACK = 8;
+	this.ENTER = 13; // Enter key code
+	this.BACK = 8; // Backbutton key code
 
 	// Set a tab index if there is none
 	if(target.tabIndex == -1){
@@ -92,8 +92,9 @@ function Console(callback, duration = 2500, visible = true, target = document, o
 
 
 
-function ConsoleWindow(parent = document.body, outline = false){
+function ConsoleWindow(parent = document.body, topPercent = 30, outline = false){
 	this.parent = parent;
+	this.topPercent = topPercent;
 	if(!outline){
 		this.parent.classList.add("consoleTarget");
 	}
@@ -124,7 +125,7 @@ function ConsoleWindow(parent = document.body, outline = false){
 		
 		// Calculate the position for the console window
 		this.el.style.left = this.parent.offsetWidth / 2 - w / 2 + "px";
-		this.el.style.top = this.parent.offsetHeight / 2 - h / 2 + "px";
+		this.el.style.top = (this.parent.offsetHeight / 100) * this.topPercent - h / 2 + "px";
 	}
 	// Hide/show the box
 	this.hide = function(hide = true){

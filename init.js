@@ -8,4 +8,4 @@ var console1 = new Console(function(str){
 	if(command == "color"){
 		target.style.backgroundColor = instruction;
 	}
-}, 2000, true, target, false);
+}, 2000, true, target, 20, false);
