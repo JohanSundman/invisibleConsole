@@ -51,6 +51,11 @@ function Console(callback, duration = 2500, visible = true, target = document, t
 		}, this.duration);
 	}
 
+	// Focus
+	this.focus = function(){
+		this.target.focus();
+	}
+
 	// Erase
 	this.erase = function(){
 		this.input = this.input.substr(0, this.input.length - 1); // Remove 1 char from the string

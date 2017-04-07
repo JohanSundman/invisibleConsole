@@ -9,3 +9,4 @@ var console1 = new Console(function(str){
 		target.style.backgroundColor = instruction;
 	}
 }, 2000, true, target, 20, false);
+console1.focus();
